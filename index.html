@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Open Graph 元数据 -->
-    <meta property="og:title" content="kafeeltest" />
+    <meta property="og:title" content="我的视频标题" />
     <meta property="og:description" content="这是一个关于XXX的视频。" />
     <meta property="og:image" content="https://ka-feel.github.io/my-video-page/test.png" />
-    <meta property="og:url" content="https://ka-feel.github.io/my-video-page/im.html" />
+    <meta property="og:url" content="https://ka-feel.github.io/my-video-page/index.html" />
     <meta property="og:type" content="video.other" />
     
     <!-- Twitter Card 元数据 -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Kafeel_X"> <!-- 替换为您的 Twitter 账号 -->
-    <meta name="twitter:title" content="kafeeltest">
+    <meta name="twitter:title" content="我的视频标题">
     <meta name="twitter:description" content="这是一个关于XXX的视频。">
     <meta name="twitter:image" content="https://ka-feel.github.io/my-video-page/test.png"> <!-- 替换为您的大图链接 -->
-    <meta name="twitter:url" content="https://ka-feel.github.io/my-video-page/im.html"> <!-- 替换为您的页面链接 -->
+    <meta name="twitter:url" content="https://ka-feel.github.io/my-video-page/index.html"> <!-- 替换为您的页面链接 -->
 
     <style>
         body {
@@ -27,29 +27,14 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
-            position: relative; /* 使得子元素可以绝对定位 */
-        }
-        .video-container {
-            position: relative;
-            width: 1280px; /* 设置为与大图相同的宽度 */
-            height: 720px; /* 设置为与大图相同的高度 */
-            overflow: hidden; /* 防止溢出 */
-            cursor: pointer; /* 鼠标悬停时显示为手形 */
-        }
-        video {
-            width: 100%; /* 使视频宽度填满容器 */
-            height: 100%; /* 使视频高度填满容器 */
-            object-fit: cover; /* 保持视频宽高比 */
-            display: block; /* 消除底部空白 */
         }
     </style>
 </head>
 <body>
-    <div class="video-container" onclick="this.querySelector('video').play();"> <!-- 点击播放视频 -->
-        <video controls muted autoplay loop> <!-- 添加 muted 和 autoplay 属性 -->
-            <source src="https://ka-feel.github.io/my-video-page/test.mp4" type="video/mp4"> <!-- 替换为您的视频链接 -->
-            您的浏览器不支持视频播放，请升级浏览器。
-        </video>
-    </div>
+    <h1>欢迎测试我的 Twitter Card!</h1>
+    <video controls muted autoplay loop width="1280" height="720">
+        <source src="https://ka-feel.github.io/my-video-page/test.mp4" type="video/mp4"> <!-- 替换为您的视频链接 -->
+        您的浏览器不支持视频播放，请升级浏览器。
+    </video>
 </body>
 </html>
