@@ -8,7 +8,7 @@
     <meta property="og:title" content="kafeeltest" />
     <meta property="og:description" content="这是一个关于XXX的视频。" />
     <meta property="og:image" content="https://ka-feel.github.io/my-video-page/test.png" />
-    <meta property="og:url" content="https://ka-feel.github.io/my-video-page/index.html" />
+    <meta property="og:url" content="https://ka-feel.github.io/my-video-page/im.html" />
     <meta property="og:type" content="video.other" />
     
     <!-- Twitter Card 元数据 -->
@@ -17,7 +17,7 @@
     <meta name="twitter:title" content="kafeeltest">
     <meta name="twitter:description" content="这是一个关于XXX的视频。">
     <meta name="twitter:image" content="https://ka-feel.github.io/my-video-page/test.png"> <!-- 替换为您的大图链接 -->
-    <meta name="twitter:url" content="https://ka-feel.github.io/my-video-page/index.html"> <!-- 替换为您的页面链接 -->
+    <meta name="twitter:url" content="https://ka-feel.github.io/my-video-page/im.html"> <!-- 替换为您的页面链接 -->
 
     <style>
         body {
@@ -31,6 +31,7 @@
         }
         .thumbnail {
             position: relative; /* 使得按钮可以相对于缩略图定位 */
+            cursor: pointer; /* 鼠标悬停时显示为手形 */
         }
         .play-button {
             position: absolute;
@@ -71,9 +72,9 @@
     </style>
 </head>
 <body>
-    <div class="thumbnail">
+    <div class="thumbnail" onclick="playVideo();"> <!-- 点击缩略图播放视频 -->
         <img src="https://ka-feel.github.io/my-video-page/test.png" alt="大图" style="max-width: 100%; height: auto;"> <!-- 替换为您的大图链接 -->
-        <div class="play-button" onclick="playVideo();"></div> <!-- 点击按钮播放视频 -->
+        <div class="play-button"></div> <!-- 播放按钮 -->
     </div>
 
     <!-- 模态窗口 -->
