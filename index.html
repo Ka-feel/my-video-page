@@ -7,7 +7,7 @@
     <!-- Open Graph 元数据 -->
     <meta property="og:title" content="我的视频标题" />
     <meta property="og:description" content="这是一个关于XXX的视频。" />
-    <meta property="og:image" content="https://example.com/video-thumbnail.jpg" />
+    <meta property="og:image" content="https://ka-feel.github.io/my-video-page/test.png" />
     <meta property="og:url" content="https://ka-feel.github.io/my-video-page/index.html" />
     <meta property="og:type" content="video.other" />
     <meta property="og:video" content="https://ka-feel.github.io/my-video-page/test.mp4" />
@@ -16,10 +16,11 @@
     <meta property="og:video:height" content="720" />
 
     <!-- Twitter Player Card 元数据 -->
-    <meta name="twitter:card" content="player">
-    <meta name="twitter:title" content="视频播放示例">
-    <meta name="twitter:description" content="点击播放视频，查看详细内容。">
-    <meta name="twitter:image" content="https://example.com/thumbnail.jpg"> <!-- 视频缩略图链接 -->
+    <meta name="twitter:card" content="summary_large_image"> <!-- 选择适合的卡片类型 -->
+    <meta name="twitter:site" content="@Kafeel_X"> <!-- 替换为您的 Twitter 账号 -->
+    <meta name="twitter:title" content="我的视频标题">
+    <meta name="twitter:description" content="这是一个关于XXX的视频。">
+    <meta name="twitter:image" content="https://ka-feel.github.io/my-video-page/test.png"> <!-- 视频缩略图链接 -->
     <meta name="twitter:player" content="https://ka-feel.github.io/my-video-page/index.html"> <!-- 本页面链接 -->
     <meta name="twitter:player:width" content="1280">
     <meta name="twitter:player:height" content="720">
@@ -40,16 +41,9 @@
     </style>
 </head>
 <body>
-    <video controls autoplay muted width="1280" height="720"> <!-- 确保添加了 autoplay 和 muted 属性 -->
+    <video controls autoplay muted width="1280" height="720">
         <source src="https://ka-feel.github.io/my-video-page/test.mp4" type="video/mp4"> <!-- 替换为您的视频链接 -->
         您的浏览器不支持视频播放，请升级浏览器。
     </video>
-
-    <script>
-        window.onload = function() {
-            var video = document.querySelector('video');
-            video.play(); // 尝试自动播放
-        };
-    </script>
 </body>
 </html>
