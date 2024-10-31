@@ -5,25 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <!-- Open Graph 元数据 -->
-    <meta property="og:title" content="我的视频标题" />
+    <meta property="og:title" content="kafeeltest" />
     <meta property="og:description" content="这是一个关于XXX的视频。" />
     <meta property="og:image" content="https://ka-feel.github.io/my-video-page/test.png" />
     <meta property="og:url" content="https://ka-feel.github.io/my-video-page/index.html" />
     <meta property="og:type" content="video.other" />
-    <meta property="og:video" content="https://ka-feel.github.io/my-video-page/test.mp4" />
-    <meta property="og:video:type" content="video/mp4" />
-    <meta property="og:video:width" content="1280" />
-    <meta property="og:video:height" content="720" />
-
-    <!-- Twitter Player Card 元数据 -->
-    <meta name="twitter:card" content="summary_large_image"> <!-- 选择适合的卡片类型 -->
+    
+    <!-- Twitter Card 元数据 -->
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Kafeel_X"> <!-- 替换为您的 Twitter 账号 -->
-    <meta name="twitter:title" content="我的视频标题">
+    <meta name="twitter:title" content="kafeeltest">
     <meta name="twitter:description" content="这是一个关于XXX的视频。">
-    <meta name="twitter:image" content="https://ka-feel.github.io/my-video-page/test.png"> <!-- 视频缩略图链接 -->
-    <meta name="twitter:player" content="https://ka-feel.github.io/my-video-page/index.html"> <!-- 本页面链接 -->
-    <meta name="twitter:player:width" content="1280">
-    <meta name="twitter:player:height" content="720">
+    <meta name="twitter:image" content="https://ka-feel.github.io/my-video-page/test.png"> <!-- 替换为您的大图链接 -->
+    <meta name="twitter:url" content="https://ka-feel.github.io/my-video-page/index.html"> <!-- 替换为您的页面链接 -->
 
     <style>
         body {
@@ -33,17 +27,79 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
+            position: relative; /* 使得子元素可以绝对定位 */
         }
-        video {
-            max-width: 100%;
-            height: auto;
+        .thumbnail {
+            position: relative; /* 使得按钮可以相对于缩略图定位 */
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 将按钮居中 */
+            width: 64px; /* 按钮宽度 */
+            height: 64px; /* 按钮高度 */
+            background: url('https://ka-feel.github.io/my-video-page/play-button.png') no-repeat center center; /* 替换为播放按钮图标的链接 */
+            background-size: contain; /* 按钮图标自适应 */
+            cursor: pointer; /* 鼠标悬停时显示为手形 */
+        }
+        /* 模态窗口样式 */
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* 半透明背景 */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal video {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <video controls autoplay muted width="1280" height="720">
-        <source src="https://ka-feel.github.io/my-video-page/test.mp4" type="video/mp4"> <!-- 替换为您的视频链接 -->
-        您的浏览器不支持视频播放，请升级浏览器。
-    </video>
+    <div class="thumbnail">
+        <img src="https://ka-feel.github.io/my-video-page/test.png" alt="大图" style="max-width: 100%; height: auto;"> <!-- 替换为您的大图链接 -->
+        <div class="play-button" onclick="playVideo();"></div> <!-- 点击按钮播放视频 -->
+    </div>
+
+    <!-- 模态窗口 -->
+    <div class="modal" id="videoModal">
+        <span class="close" onclick="closeVideo();">&times;</span>
+        <video id="videoPlayer" controls muted autoplay> <!-- 添加 muted 和 autoplay 属性 -->
+            <source src="https://ka-feel.github.io/my-video-page/test.mp4" type="video/mp4"> <!-- 替换为您的视频链接 -->
+            您的浏览器不支持视频播放，请升级浏览器。
+        </video>
+    </div>
+
+    <script>
+        function playVideo() {
+            var modal = document.getElementById("videoModal");
+            modal.style.display = "flex"; // 显示模态窗口
+            var video = document.getElementById("videoPlayer");
+            video.play(); // 播放视频
+        }
+
+        function closeVideo() {
+            var modal = document.getElementById("videoModal");
+            modal.style.display = "none"; // 隐藏模态窗口
+            var video = document.getElementById("videoPlayer");
+            video.pause(); // 暂停视频
+            video.currentTime = 0; // 重置视频回到开头
+        }
+    </script>
 </body>
 </html>
