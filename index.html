@@ -1,158 +1,49 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Twitter-Style Player</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Open Graph 元数据 -->
+    <meta property="og:title" content="我的视频标题" />
+    <meta property="og:description" content="这是一个关于XXX的视频。" />
+    <meta property="og:image" content="https://example.com/video-thumbnail.jpg" />
+    <meta property="og:url" content="https://ka-feel.github.io/my-video-page/index.html" />
+    <meta property="og:type" content="video.other" />
+    <meta property="og:video" content="https://ka-feel.github.io/my-video-page/test.mp4" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="1280" />
+    <meta property="og:video:height" content="720" />
+
+    <!-- Twitter Player Card 元数据 -->
+    <meta name="twitter:card" content="player">
+    <meta name="twitter:site" content="@Kafeel_X"> <!-- 替换为您的 Twitter 账号 -->
+    <meta name="twitter:title" content="视频播放示例">
+    <meta name="twitter:description" content="点击播放视频，查看详细内容。">
+    <meta name="twitter:image" content="https://example.com/thumbnail.jpg"> <!-- 视频缩略图链接 -->
+    <meta name="twitter:player" content="https://ka-feel.github.io/my-video-page/index.html"> <!-- 本页面链接 -->
+    <meta name="twitter:player:width" content="1280">
+    <meta name="twitter:player:height" content="720">
+
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
             margin: 0;
-        }
-        #video-container {
-            position: relative;
-            width: 640px;
-            max-width: 100%;
+            background-color: #f0f0f0;
         }
         video {
-            width: 100%;
+            max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            background-color: #000;
-        }
-        .controls {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5px 10px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            font-size: 14px;
-        }
-        .left-controls, .right-controls {
-            display: flex;
-            align-items: center;
-        }
-        .left-controls button, .right-controls button {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 0 5px;
-        }
-        .progress-bar-container {
-            flex: 1;
-            height: 5px;
-            background: #444;
-            margin: 0 10px;
-            border-radius: 3px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .progress-bar {
-            width: 0;
-            height: 100%;
-            background: #1da1f2;
-        }
-        .time {
-            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-
-<div id="video-container">
-    <video id="video" src="https://ka-feel.github.io/my-video-page/test.mp4"></video>
-    <div class="controls">
-        <div class="left-controls">
-            <button id="play-pause">▶️</button>
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-            <span id="current-time" class="time">0:00</span> / <span id="duration" class="time">0:00</span>
-        </div>
-        <div class="right-controls">
-            <button id="volume">🔊</button>
-            <button id="pip">📺</button>
-            <button id="fullscreen">🔲</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    const video = document.getElementById('video');
-    const playPauseButton = document.getElementById('play-pause');
-    const progressBarContainer = document.querySelector('.progress-bar-container');
-    const progressBar = document.getElementById('progress-bar');
-    const currentTimeElem = document.getElementById('current-time');
-    const durationElem = document.getElementById('duration');
-    const volumeButton = document.getElementById('volume');
-    const pipButton = document.getElementById('pip');
-    const fullscreenButton = document.getElementById('fullscreen');
-
-    video.addEventListener('loadedmetadata', () => {
-        durationElem.textContent = formatTime(video.duration);
-    });
-
-    video.addEventListener('timeupdate', () => {
-        const current = video.currentTime;
-        currentTimeElem.textContent = formatTime(current);
-        const progress = (current / video.duration) * 100;
-        progressBar.style.width = `${progress}%`;
-    });
-
-    playPauseButton.addEventListener('click', () => {
-        if (video.paused) {
-            video.play();
-            playPauseButton.textContent = '⏸️';
-        } else {
-            video.pause();
-            playPauseButton.textContent = '▶️';
-        }
-    });
-
-    progressBarContainer.addEventListener('click', (e) => {
-        const rect = progressBarContainer.getBoundingClientRect();
-        const clickPos = e.clientX - rect.left;
-        const clickRatio = clickPos / rect.width;
-        video.currentTime = clickRatio * video.duration;
-    });
-
-    volumeButton.addEventListener('click', () => {
-        video.muted = !video.muted;
-        volumeButton.textContent = video.muted ? '🔇' : '🔊';
-    });
-
-    pipButton.addEventListener('click', async () => {
-        if (document.pictureInPictureElement) {
-            await document.exitPictureInPicture();
-        } else {
-            await video.requestPictureInPicture();
-        }
-    });
-
-    fullscreenButton.addEventListener('click', () => {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        } else {
-            video.requestFullscreen();
-        }
-    });
-
-    function formatTime(time) {
-        const minutes = Math.floor(time / 60);
-        const seconds = Math.floor(time % 60).toString().padStart(2, '0');
-        return `${minutes}:${seconds}`;
-    }
-</script>
-
+    <video controls width="1280" height="720">
+        <source src="https://ka-feel.github.io/my-video-page/test.mp4" type="video/mp4"> <!-- 替换为您的视频链接 -->
+        您的浏览器不支持视频播放，请升级浏览器。
+    </video>
 </body>
 </html>
