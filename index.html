@@ -3,37 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>视频播放页面</title>
-
-    <!-- Twitter Player Card Meta Tags -->
-    <meta name="twitter:card" content="player">
-    <meta name="twitter:site" content="@Kafeel_X"> <!-- 替换为您的 Twitter 账号 -->
-    <meta name="twitter:title" content="视频播放示例">
-    <meta name="twitter:description" content="点击播放视频，查看详细内容。">
-    <meta name="twitter:image" content="https://example.com/thumbnail.jpg"> <!-- 视频缩略图链接 -->
-    <meta name="twitter:player" content="https://ka-feel.github.io/my-video-page/index.html"> <!-- 本页面链接 -->
-    <meta name="twitter:player:width" content="1280">
-    <meta name="twitter:player:height" content="720">
+    <title>Twitter Style Video Player</title>
 
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
+        /* Container for styling */
+        .video-container {
+            position: relative;
+            max-width: 640px;
+            margin: auto;
+            background: #000;
         }
+
+        /* Video element */
         video {
-            max-width: 100%;
+            width: 100%;
             height: auto;
+            background: #000;
+        }
+
+        /* Custom controls */
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .video-container:hover .controls {
+            opacity: 1;
+        }
+
+        /* Play/Pause, Timestamp, Mute, Fullscreen icons */
+        .play-pause, .timestamp, .mute, .fullscreen, .pip {
+            cursor: pointer;
+            margin: 0 5px;
+            font-size: 16px;
+        }
+
+        /* Progress bar */
+        .progress {
+            flex: 1;
+            height: 5px;
+            margin: 0 5px;
+            background: #444;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-filled {
+            background: #1da1f2;
+            width: 0;
+            height: 100%;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <video controls width="1280" height="720">
-        <source src="https://ka-feel.github.io/my-video-page/test.mp4" type="video/mp4"> <!-- 替换为您的视频链接 -->
-        您的浏览器不支持视频播放，请升级浏览器。
-    </video>
+    <div class="video-container">
+        <!-- Video element -->
+        <video id="video" controls src="https://ka-feel.github.io/my-video-page/test.mp4"></video>
+
+        <!-- Custom controls -->
+        <div class="controls">
+            <span id="playPause" class="play-pause">▶️</span>
+            <div class="progress" id="progressBar">
+                <div class="progress-filled" id="progressFilled"></div>
+            </div>
+            <span id="timestamp" class="timestamp">0:00</span>
+            <span id="mute" class="mute">🔈</span>
+            <span id="pip" class="pip">📺</span>
+            <span id="fullscreen" class="fullscreen">⛶</span>
+        </div>
+    </div>
+
+    <script>
+        // Elements
+        const video = document.getElementById('video');
+        const playPause = document.getElementById('playPause');
+        const progressBar = document.getElementById('progressBar');
+        const progressFilled = document.getElementById('progressFilled');
+        const timestamp = document.getElementById('timestamp');
+        const mute = document.getElementById('mute');
+        const fullscreen = document.getElementById('fullscreen');
+        const pip = document.getElementById('pip');
+
+        // Play/pause video
+        playPause.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playPause.textContent = '⏸️';
+            } else {
+                video.pause();
+                playPause.textContent = '▶️';
+            }
+        });
+
+        // Update progress bar
+        video.addEventListener('timeupdate', () => {
+            const progress = (video.currentTime / video.duration) * 100;
+            progressFilled.style.width = `${progress}%`;
+
+            // Update timestamp
+            const mins = Math.floor(video.currentTime / 60);
+            const secs = Math.floor(video.currentTime % 60).toString().padStart(2, '0');
+            timestamp.textContent = `${mins}:${secs}`;
+        });
+
+        // Seek video on progress bar click
+        progressBar.addEventListener('click', (e) => {
+            const newTime = (e.offsetX / progressBar.offsetWidth) * video.duration;
+            video.currentTime = newTime;
+        });
+
+        // Mute/unmute
+        mute.addEventListener('click', () => {
+            video.muted = !video.muted;
+            mute.textContent = video.muted ? '🔇' : '🔈';
+        });
+
+        // Fullscreen toggle
+        fullscreen.addEventListener('click', () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                video.requestFullscreen();
+            }
+        });
+
+        // Picture-in-picture
+        pip.addEventListener('click', async () => {
+            if (document.pictureInPictureElement) {
+                document.exitPictureInPicture();
+            } else {
+                await video.requestPictureInPicture();
+            }
+        });
+    </script>
 </body>
 </html>
